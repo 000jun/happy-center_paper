@@ -65,7 +65,7 @@ if testing_button: # 테스트 버튼 클릭시 작동 로직
 
     # 입력값 데이터프레임 반환 : value -> dataframe
     df = pd.DataFrame(value_dict, index=[0])
-    df.to_excel('df.xlsx')
+    # df.to_excel('df.xlsx')
 
     # 본문 생성
     result_paper = title +'\n\n' # 제목

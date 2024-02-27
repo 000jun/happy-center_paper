@@ -40,7 +40,7 @@ total_cost = f'금{str_cost}원' + f'(금{readnumber(cost_value)}원)'
 content = st.text_input('내역 입력', value='붙임파일 참조')
 
 # 지급대상
-people_col = st.columns(10)
+people_col = st.columns(8)
 with people_col[0]:
     people = st.text_input('지급대상 대표자명 입력', placeholder='ex)홍길동')
 with people_col[1]:

@@ -9,6 +9,8 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname('STREAMLIT_PROJE
 from read_number import *
 import pandas as pd
 
+from attached_file import write_attach
+
 # 전역변수 설정
 value_dict = {}
 
@@ -35,14 +37,28 @@ with checks[4]:
 with checks[5]:
     budget = st.checkbox('예산과목', True)
 
+# st.markdown(
+#     """
+# <style>
+#     .element-container.st-emotion-cache-1k6pwda.e1f1d6gn4{
+#             position: relative;
+#             top: 40px;}
+# </style>
+#     """,
+#             unsafe_allow_html=True
+#             )
+
+
 # 관련문서
 if paper == True:
-    paper_col = st.columns(2)
+    paper_col = st.columns(8)
     with paper_col[0]:
         paper_haed = st.text_input('관련문서 부서', '중등교육과')
     with paper_col[1]:
-        paper_tail = st.text_input('문서번호', placeholder='1234호')
-    link_paper = paper_haed + '-' + paper_tail # 관련문서 value
+        paper_body = st.text_input('문서번호', placeholder='1234')
+    with paper_col[2]:
+        paper_tail = st.write('호')
+    link_paper = paper_haed + '-' + paper_body # 관련문서 value
     value_dict['관련문서'] = link_paper # 딕셔너리 추가
 
 # 금액
@@ -75,8 +91,11 @@ if budget == True:
     budget_value = st.text_input('예산 과목 입력', 'test_value')
     value_dict['예산'] = budget_value
 
+# 붙임파일
+attached_file = write_attach() # 붙임파일 모듈 호출
+
 # print test FIXME:
-testing_button = st.button('테스트')
+testing_button = st.button('품의서 출력')
 if testing_button: # 테스트 버튼 클릭시 작동 로직
 
     # 입력값 데이터프레임 반환 : value -> dataframe
@@ -89,6 +108,8 @@ if testing_button: # 테스트 버튼 클릭시 작동 로직
     for i in range(len(df.columns)):
         line = (str(i+1) + '. ' + str(df.columns[i]) + ': '+ str(df[df.columns[i]].values[0]) +'\n')
         result_paper += line
+
+    result_paper += '\n' + attached_file # 붙임파일 추가
 
     # 본문 출력
     st.subheader('품의서 출력 결과')
